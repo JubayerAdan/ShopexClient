@@ -21,10 +21,10 @@ const Category = () => {
     
     setIsLoading(true);
     try {
-      let url = `http://localhost:5000/products?page=${currentPage}&limit=${itemsPerPage}`;
+      let url = `https://shopex-server-xi.vercel.app/products?page=${currentPage}&limit=${itemsPerPage}`;
       
       if (user?.email) {
-        url = `http://localhost:5000/feed/personalized?email=${user.email}&page=${currentPage}&limit=${itemsPerPage}`;
+        url = `https://shopex-server-xi.vercel.app/feed/personalized?email=${user.email}&page=${currentPage}&limit=${itemsPerPage}`;
       }
 
       const response = await fetch(url);

@@ -22,7 +22,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const res = await fetch('http://localhost:5000/products?page=1&limit=100');
+        const res = await fetch('https://shopex-server-xi.vercel.app/products?page=1&limit=100');
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -152,12 +152,12 @@ const Navbar = () => {
                   </div>
                   <div
                     tabIndex={0}
-                    className="dropdown-content menu bg-indigo-50 rounded-box z-20 w-full md:w-80 p-4 shadow-xl mt-4 border border-indigo-100 max-w-[95vw]"
+                    className="dropdown-content menu bg-indigo-50 rounded-box w-full md:w-80 p-4 shadow-xl mt-4 border border-indigo-100 max-w-[95vw] z-50 relative"
                   >
                     {/* Dropdown Header */}
                     <div className="flex items-center justify-between pb-4 border-b border-indigo-100 mb-4">
                       <h3 className="text-base md:text-lg font-bold text-indigo-900">Cart ({cart.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0)} item{cart.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0) !== 1 ? 's' : ''})</h3>
-                      <Link href="/" className="text-indigo-600 hover:text-indigo-700 text-sm font-semibold">Your Site</Link>
+                      
                     </div>
 
                     {/* Cart Items List */}
@@ -166,23 +166,31 @@ const Navbar = () => {
                         <p className="text-center text-indigo-400 text-sm md:text-base">Your cart is empty.</p>
                       ) : (
                         cart.map((item: any) => (
-                          <div key={item._id} className="flex items-center gap-2 md:gap-3 py-3 border-b border-indigo-50 last:border-b-0">
+                          <div key={item._id} className="flex items-start gap-2 md:gap-3 py-3 border-b border-indigo-50 last:border-b-0">
                             <img src={item.image} alt={item.name} className="w-12 h-12 md:w-16 md:h-16 object-cover rounded-md border border-indigo-100 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <h4 className="text-sm md:text-base font-medium text-indigo-900 line-clamp-1 truncate">{item.name}</h4>
-                              <div className="flex items-center gap-1 md:gap-2 mt-2 flex-wrap">
+                            <div className="flex-1 min-w-0 flex flex-col">
+                              <h4
+                                className="text-sm md:text-base font-medium text-indigo-900 break-words line-clamp-2 leading-snug"
+                                style={{ wordBreak: "break-word" }}
+                                title={item.name}
+                              >
+                                {item.name}
+                              </h4>
+                              <div className="flex items-center gap-1 md:gap-2 mt-2">
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    className="px-1.5 md:px-2 py-0.5 border border-indigo-200 rounded text-indigo-600 hover:bg-indigo-100 disabled:opacity-50 text-sm md:text-base"
+                                    onClick={() => updateQuantity(item._id, Math.max(1, (item.quantity || 1) - 1))}
+                                    disabled={(item.quantity || 1) <= 1}
+                                  >-</button>
+                                  <span className="text-sm md:text-base font-semibold text-indigo-700">{item.quantity || 1}</span>
+                                  <button
+                                    className="px-1.5 md:px-2 py-0.5 border border-indigo-200 rounded text-indigo-600 hover:bg-indigo-100 text-sm md:text-base"
+                                    onClick={() => updateQuantity(item._id, (item.quantity || 1) + 1)}
+                                  >+</button>
+                                </div>
                                 <button
-                                  className="px-1.5 md:px-2 py-0.5 border border-indigo-200 rounded text-indigo-600 hover:bg-indigo-100 disabled:opacity-50 text-sm md:text-base"
-                                  onClick={() => updateQuantity(item._id, Math.max(1, (item.quantity || 1) - 1))}
-                                  disabled={(item.quantity || 1) <= 1}
-                                >-</button>
-                                <span className="text-sm md:text-base font-semibold text-indigo-700">{item.quantity || 1}</span>
-                                <button
-                                  className="px-1.5 md:px-2 py-0.5 border border-indigo-200 rounded text-indigo-600 hover:bg-indigo-100 text-sm md:text-base"
-                                  onClick={() => updateQuantity(item._id, (item.quantity || 1) + 1)}
-                                >+</button>
-                                <button
-                                  className="ml-2 md:ml-3 text-indigo-400 hover:text-red-500 transition-colors"
+                                  className="ml-2 text-indigo-400 hover:text-red-500 transition-colors"
                                   onClick={() => removeFromCart(item._id)}
                                   title="Delete"
                                 >
@@ -196,7 +204,7 @@ const Navbar = () => {
                                 </button>
                               </div>
                             </div>
-                            <span className="text-sm md:text-base font-bold text-indigo-900 flex-shrink-0">${item.price.toFixed(2)}</span>
+                            <span className="text-sm md:text-base font-bold text-indigo-900 flex-shrink-0 ml-2">${item.price.toFixed(2)}</span>
                           </div>
                         ))
                       )}
@@ -277,7 +285,7 @@ const Navbar = () => {
                     className="dropdown-content bg-white rounded-xl z-20 mt-3 w-64 p-4 shadow-xl border border-indigo-100 flex flex-col items-center"
                   >
                     {/* Horizontal profile card wrapped in a Link */}
-                    <Link href="/profile" className="flex items-center gap-4 w-full mb-4 p-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-900 transition-colors">
+                    <Link href="" className="flex items-center gap-4 w-full mb-4 p-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-900 transition-colors">
                       <img
                         src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
                         alt="Profile"

@@ -81,7 +81,7 @@ const ProductsPageContent = () => {
     setIsLoading(true);
     setError(null);
     try {
-      let url = `http://localhost:5000/products?`;
+      let url = `https://shopex-server-xi.vercel.app/products?`;
       // Always include search query if it exists
       if (searchQuery) url += `search=${encodeURIComponent(searchQuery)}&`;
       // Add category filter
@@ -143,7 +143,7 @@ const ProductsPageContent = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:5000/products/${productId}`);
+      const res = await fetch(`https://shopex-server-xi.vercel.app/products/${productId}`);
       if (!res.ok) {
         if (res.status === 404) {
           throw new Error("Product not found.");
@@ -159,7 +159,7 @@ const ProductsPageContent = () => {
       // Track product view if user is logged in
       if (user?.email) {
         try {
-          await fetch('http://localhost:5000/track-view', {
+          await fetch('https://shopex-server-xi.vercel.app/track-view', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -174,7 +174,7 @@ const ProductsPageContent = () => {
 
       // Fetch related products
       if (data && data.category) {
-        const relatedRes = await fetch(`http://localhost:5000/products?category=${encodeURIComponent(data.category)}&limit=5`);
+        const relatedRes = await fetch(`https://shopex-server-xi.vercel.app/products?category=${encodeURIComponent(data.category)}&limit=5`);
         if (relatedRes.ok) {
           let relatedData = await relatedRes.json();
           relatedData = relatedData.products.filter((p: any) => p._id !== data._id).slice(0, 4);
@@ -228,7 +228,7 @@ const ProductsPageContent = () => {
       // Track purchase if user is logged in
       if (user?.email) {
         try {
-          await fetch('http://localhost:5000/track-purchase', {
+          await fetch('https://shopex-server-xi.vercel.app/track-purchase', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -118,7 +118,7 @@ export const RegisterPage = () => {
           setProfilePicPreview(result.data.url);
           
           updateUserProfile("", result.data.url);
-          const uploadtodatabase = await useAxiosPublic().put("http://localhost:5000/update-profile-pic", {email: userEmail, photoUrl: result.data.url});
+          const uploadtodatabase = await useAxiosPublic().put("https://shopex-server-xi.vercel.app/update-profile-pic", {email: userEmail, photoUrl: result.data.url});
           console.log(uploadtodatabase);
         } else {
           console.error("Failed to upload image:", result.error);
@@ -146,7 +146,7 @@ export const RegisterPage = () => {
     } else {
       console.log(categoryError);
 
-      return useAxiosPublic().put("http://localhost:5000/update-favorite-categories", {
+      return useAxiosPublic().put("https://shopex-server-xi.vercel.app/update-favorite-categories", {
         email: userEmail,
         categories: selectedCategories,
       }).then(() => {

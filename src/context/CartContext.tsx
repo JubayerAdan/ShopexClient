@@ -29,7 +29,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchCart = async () => {
       if (user?.email) {
         try {
-          const res = await fetch(`http://localhost:5000/cart/${user.email}`);
+          const res = await fetch(`https://shopex-server-xi.vercel.app/cart/${user.email}`);
           if (!res.ok) throw new Error('Failed to fetch cart');
           const data = await res.json();
           setCart(data);
@@ -70,7 +70,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           selectedVariant: product.selectedVariant
         };
 
-        const res = await fetch("http://localhost:5000/cart", {
+        const res = await fetch("https://shopex-server-xi.vercel.app/cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
@@ -103,7 +103,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       console.log('Updating quantity:', { productId, quantity }); // Debug log
       
-      const res = await fetch(`http://localhost:5000/cart/update`, {
+      const res = await fetch(`https://shopex-server-xi.vercel.app/cart/update`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -149,7 +149,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       console.log('Removing from cart:', { productId }); // Debug log
       
-      const res = await fetch("http://localhost:5000/cart/remove", {
+      const res = await fetch("https://shopex-server-xi.vercel.app/cart/remove", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

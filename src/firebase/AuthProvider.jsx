@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
     try {
       // Only attempt to fetch if not loading and user exists with email
       if (!loading && user && user.email) {
-        const response = await fetch(`http://localhost:5000/users/${user.email}`);
+        const response = await fetch(`https://shopex-server-xi.vercel.app/users/${user.email}`);
         
         // Check if the response is ok before parsing JSON
         if (!response.ok) {
