@@ -1,7 +1,7 @@
 // app/products/page.tsx
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ShoppingCart, Filter, ChevronDown, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -35,7 +35,7 @@ const priceRanges = [
   { name: "Over $500", value: { min: 500, max: 1000 } },
 ];
 
-const ProductsPage = () => {
+const ProductsPageContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const searchQuery = searchParams.get('search');
@@ -823,6 +823,22 @@ const ProductsPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+// Loading component
+const LoadingState = () => (
+  <div className="flex justify-center items-center min-h-[80vh]">
+    <span className="loading loading-spinner loading-lg text-indigo-600"></span>
+  </div>
+);
+
+// Main component with Suspense
+const ProductsPage = () => {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <ProductsPageContent />
+    </Suspense>
   );
 };
 
