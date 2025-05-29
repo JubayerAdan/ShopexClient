@@ -86,7 +86,7 @@ export const RegisterPage = () => {
   };
 
   const onProfileSubmit = (data: any) => {
-    console.log("Profile data:", data);
+  
     setIsCategoryStep(true);
   };
 
@@ -114,7 +114,7 @@ export const RegisterPage = () => {
         const result = await response.json();
 
         if (result.success) {
-          console.log("Uploaded image URL:", result.data.url);
+          
           setProfilePicPreview(result.data.url);
           
           updateUserProfile("", result.data.url);
